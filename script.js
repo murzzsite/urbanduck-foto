@@ -306,12 +306,6 @@ const LEAD_ENDPOINT = 'https://lead-relay.leestygpt.workers.dev/lead/FAW6YD2QJL'
         onUpdate: self => gsap.set(bar, { scaleX: self.progress }),
       },
     });
-    $$('.w img', track).forEach(im => {
-      gsap.fromTo(im, { scale: 1.12 }, {
-        scale: 1, ease: 'none',
-        scrollTrigger: { trigger: im.parentElement, containerAnimation: ScrollTrigger.getAll().find(s => s.vars.pin)?.animation, start: 'left 95%', end: 'left 40%', scrub: true },
-      });
-    });
     return () => document.documentElement.classList.remove('works-pin');
   });
   window.addEventListener('load', () => ScrollTrigger.refresh());
