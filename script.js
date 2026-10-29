@@ -3,7 +3,7 @@ const LEAD_ENDPOINT = 'https://lead-relay.leestygpt.workers.dev/lead/FAW6YD2QJL'
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches && !/[?&]motion/.test(location.search);
   const hasGsap = !!(window.gsap && window.ScrollTrigger);
   const fmt = n => Math.round(n).toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽';
 
@@ -296,6 +296,7 @@ const LEAD_ENDPOINT = 'https://lead-relay.leestygpt.workers.dev/lead/FAW6YD2QJL'
     const track = $('#worksTrack');
     const bar = $('#worksBar');
     if (!track) return;
+    document.documentElement.classList.add('works-pin');
     const dist = () => Math.max(0, track.scrollWidth - window.innerWidth + 24);
     gsap.to(track, {
       x: () => -dist(), ease: 'none',
@@ -311,6 +312,7 @@ const LEAD_ENDPOINT = 'https://lead-relay.leestygpt.workers.dev/lead/FAW6YD2QJL'
         scrollTrigger: { trigger: im.parentElement, containerAnimation: ScrollTrigger.getAll().find(s => s.vars.pin)?.animation, start: 'left 95%', end: 'left 40%', scrub: true },
       });
     });
+    return () => document.documentElement.classList.remove('works-pin');
   });
   window.addEventListener('load', () => ScrollTrigger.refresh());
 

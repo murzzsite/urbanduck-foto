@@ -82,7 +82,7 @@ h3 { font-family: var(--f-head); font-weight: 500; font-size: 1.15rem; line-heig
 .header.scrolled { border-bottom-color: var(--line); }
 .header__inner { display: flex; align-items: center; gap: 24px; min-height: 68px; min-width: 0; }
 .logo { display: inline-flex; flex-shrink: 0; }
-.logo img { height: 30px; width: auto; }
+.logo img { height: 38px; width: auto; }
 .nav { display: flex; align-items: center; gap: 26px; margin-left: auto; }
 .nav a { text-decoration: none; font-weight: 500; font-size: .96rem; white-space: nowrap; position: relative; }
 .nav a:not(.nav__tel-m)::after {
@@ -189,7 +189,8 @@ h3 { font-family: var(--f-head); font-weight: 500; font-size: 1.15rem; line-heig
 .works__pin { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 70px 0 56px; overflow: hidden; }
 .works__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 40px; }
 .works__hint { color: var(--ink-2); font-size: .95rem; white-space: nowrap; }
-.works__viewport { width: 100%; }
+.works__viewport { width: 100%; overflow-x: auto; padding-bottom: 12px; scrollbar-width: thin; }
+.works-pin .works__viewport { overflow: visible; padding-bottom: 0; }
 .works__track { --wh: clamp(280px, 54vh, 540px); display: flex; gap: 26px; padding: 0 max(24px, calc((100vw - 1240px) / 2 + 24px)); width: max-content; will-change: transform; }
 .w { position: relative; flex: 0 0 auto; height: var(--wh); }
 .w img { width: auto; height: 100%; aspect-ratio: 3 / 2; object-fit: cover; border: 2px solid var(--ink); border-radius: var(--r); background: #fff; }
@@ -387,7 +388,7 @@ h3 { font-family: var(--f-head); font-weight: 500; font-size: 1.15rem; line-heig
   .task:hover { padding-left: 0; padding-right: 0; }
   .task__price { grid-column: 2; padding-top: 0; }
   .works__pin { min-height: 0; padding: 72px 0 56px; }
-  .works__viewport { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 12px; }
+  .works__viewport { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
   .works__track { --wh: clamp(240px, 46vh, 360px); gap: 16px; }
   .works__track .w { scroll-snap-align: center; }
   .works__progress, .works__hint { display: none; }
