@@ -95,18 +95,22 @@ const LEAD_ENDPOINT = 'https://lead-relay.leestygpt.workers.dev/lead/FAW6YD2QJL'
   if (screen) {
     const img = $('#bgImg');
     const tag = $('#bgTag');
-    $$('.sw').forEach(b => b.addEventListener('click', () => {
-      $$('.sw').forEach(x => x.classList.toggle('is-on', x === b));
-      const clear = b.dataset.bg === 'clear';
-      screen.classList.toggle('is-clear', clear);
-      screen.style.backgroundColor = clear ? '' : b.dataset.bg;
-      tag.textContent = b.dataset.name;
-    }));
-    $$('.it').forEach(b => b.addEventListener('click', () => {
-      $$('.it').forEach(x => x.classList.toggle('is-on', x === b));
+    const pick = b => {
+      $$('.vr').forEach(x => { x.classList.toggle('is-on', x === b); x.setAttribute('aria-checked', String(x === b)); });
       img.classList.add('out');
-      setTimeout(() => { img.src = b.dataset.img; img.alt = b.dataset.alt; img.onload = () => img.classList.remove('out'); }, 200);
-    }));
+      setTimeout(() => {
+        screen.classList.toggle('is-clear', b.dataset.v === 'clear');
+        img.src = b.dataset.src;
+        img.alt = b.dataset.alt;
+        tag.textContent = b.dataset.name + ' · ' + b.dataset.price;
+        img.onload = () => img.classList.remove('out');
+        if (img.complete) img.classList.remove('out');
+      }, 220);
+    };
+    $$('.vr').forEach(b => b.addEventListener('click', () => pick(b)));
+    const rows = $$('.bgd__rows p');
+    const rowMap = [$('.vr[data-v="light"]'), $('.vr[data-v="cut"]')];
+    rows.forEach((p, i) => { p.style.cursor = 'pointer'; p.addEventListener('click', () => pick(rowMap[i])); });
   }
 
   // ===== loupe =====
@@ -288,7 +292,7 @@ const LEAD_ENDPOINT = 'https://lead-relay.leestygpt.workers.dev/lead/FAW6YD2QJL'
 
   // background demo entrance
   gsap.from('.bgd__screen', { scale: .94, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.bgd__screen', start: 'top 85%', once: true } });
-  gsap.from('.sw', { scale: 0, duration: .5, stagger: .06, ease: 'back.out(2)', scrollTrigger: { trigger: '.swatches', start: 'top 90%', once: true } });
+  gsap.from('.vr__pic', { scale: 0, duration: .6, stagger: .1, ease: 'back.out(1.8)', scrollTrigger: { trigger: '.variants', start: 'top 92%', once: true } });
 
   // works: pinned horizontal scroll on desktop
   const mm = gsap.matchMedia();
@@ -302,13 +306,15 @@ const LEAD_ENDPOINT = 'https://lead-relay.leestygpt.workers.dev/lead/FAW6YD2QJL'
       x: () => -dist(), ease: 'none',
       scrollTrigger: {
         trigger: '.works__pin', start: 'top top', end: () => '+=' + dist(),
-        pin: true, scrub: .6, invalidateOnRefresh: true, anticipatePin: 1,
+        pin: true, scrub: .6, invalidateOnRefresh: true,
         onUpdate: self => gsap.set(bar, { scaleX: self.progress }),
       },
     });
     return () => document.documentElement.classList.remove('works-pin');
   });
   window.addEventListener('load', () => ScrollTrigger.refresh());
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => ScrollTrigger.refresh(), 250); });
 
   // paintings
   gsap.from('.loupe', { y: 50, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.loupe', start: 'top 88%', once: true } });
