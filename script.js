@@ -292,7 +292,6 @@ const LEAD_ENDPOINT = 'https://lead-relay.leestygpt.workers.dev/lead/FAW6YD2QJL'
 
   // background demo entrance
   gsap.from('.bgd__screen', { scale: .94, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.bgd__screen', start: 'top 85%', once: true } });
-  gsap.from('.vr__pic', { scale: 0, duration: .6, stagger: .1, ease: 'back.out(1.8)', scrollTrigger: { trigger: '.variants', start: 'top 92%', once: true } });
 
   // works: pinned horizontal scroll on desktop
   const mm = gsap.matchMedia();
